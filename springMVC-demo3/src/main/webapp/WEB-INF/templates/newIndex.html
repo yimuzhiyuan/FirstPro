@@ -1,0 +1,136 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="index.css">
+    <script language="JavaScript" src="test.js"></script>
+</head>
+<style>
+    *{
+        color: threeddarkshadow;
+    }
+    a{
+        text-decoration: none;
+    }
+    body{
+        margin:0;
+        padding:0;
+        background-color:#808080;
+    }
+    div{
+        position:relative;
+        float:left;
+    }
+
+    #div_container{
+        width:80%;
+        height:100%;
+        border:0px solid blue;
+        margin-left:10%;
+        float:left;
+        background-color: honeydew;
+        border-radius:8px;
+    }
+    #div_fruit_list{
+        width:100%;
+        border:0px solid red;
+    }
+    #tbl_fruit{
+        width:60%;
+        line-height:28px;
+        margin-top:16px;
+        margin-left:20%;
+    }
+    #tbl_fruit , #tbl_fruit tr , #tbl_fruit th , #tbl_fruit td{
+        border:1px solid gray;
+        border-collapse:collapse;
+        text-align:center;
+        font-size:16px;
+        font-family:"黑体";
+        font-weight:lighter;
+
+    }
+    .w20{
+        width:20%;
+    }
+    .delImg{
+        width:24px;
+        height:24px;
+    }
+    .btn{
+        border:1px solid lightgray;
+        width:80px;
+        height:24px;
+    }
+
+    .center{
+        text-align:center;
+    }
+    .f30{
+        font-size: 30px;
+    }
+</style>
+<body>
+<div id="div_container">
+    <div id="div_fruit_list">
+        <p class="center f30">欢迎使用employees管理系统</p>
+        <div style="border:0px solid red;width:60%;margin-left:20%;text-align:right;">
+            <a th:href="@{/add}">添加employee</a>
+
+        </div>
+        <table id="tbl_fruit">
+            <tr>
+                <th class="w20">employeeId</th>
+                <th class="w20">firstName</th>
+                <th class="w20">lastName</th>
+                <th class="w20">email</th>
+                <th>phoneNumber</th>
+                <th>hireDate</th>
+            </tr>
+
+            <tr >
+                <td><a th:text="${Emp.employeeId}" ></a></td>
+                <td><a th:text="${Emp.firstName}" ></a></td>
+                <td><a th:text="${Emp.lastName}" ></a></td>
+                <td><a th:text="${Emp.email}" ></a></td>
+                <td><a th:text="${Emp.phoneNumber}" ></a></td>
+                <td><a th:text="${Emp.hireDate}" ></a></td>
+                <td>
+                    <a th:href="@{'/delEmp/'+${emp.employeeId}}">delete</a>
+                    <a th:href="@{'/employee/'+${emp.employeeId}}">update</a>
+                </td>
+
+
+
+
+
+            </tr>
+        </table>
+        <form id="deleteForm" method="post">
+            <input type="hidden" name="_method" value="delete">
+        </form>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
+<script type="text/javascript">
+    var vue = new Vue({
+        el:"#dataTable",
+        methods:{
+            deleteEmployee:function (event) {
+                //根据id获取表单元素
+                var deleteForm = document.getElementById("deleteForm");
+                //将触发点击事件的超链接的href属性赋值给表单的action
+                deleteForm.action = event.target.href;
+                //提交表单
+                deleteForm.submit();
+                //取消超链接的默认行为
+                event.preventDefault();
+            }
+        }
+    });
+</script>
+
+
+
+
+</body>
+</html>
